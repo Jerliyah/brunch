@@ -1,0 +1,87 @@
+html * {
+    box-sizing: border-box;
+}
+
+body {
+    background: url('bg1.jpg');
+    background-size: cover;
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+h1, h2 {
+    margin: 0;
+    padding: 0.5em;
+}
+
+
+form {
+    margin: auto;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+li {
+    background: white;
+    text-align: center;
+    padding: 0.5em 1em;
+}
+
+li > input {
+    float: left;
+}
+
+form > div {
+    border-top: 2px dashed white;
+    display: flex;
+}
+
+input.plate-item {
+    border: none;
+    flex: auto;
+    padding: 0.5rem 1rem;
+    min-width: 80%;
+}
+
+input[type="submit"] {
+    padding: 0.5rem 1rem;
+    border: none;
+    flex: auto;
+    height: 100%;
+    background: #F8BCD8;
+}
+input[type="submit"]:hover {
+    background: black;
+    color: white;
+}
+input[type="submit"]:active {
+    font-weight: bold;
+}
+
+button {
+    border: none;
+    background: #B8DF5E;
+    margin-top: 1em;
+    padding: 0.5em;
+    width: 100%;
+}
+button:hover {
+    background: #587217;
+    color: white;
+}
+button:active {
+    font-weight: bold;
+}
+
+
