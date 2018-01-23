@@ -11,7 +11,13 @@ var plate_items = [];
 
 
 // Functions
+function previous_session() {
+    // Immediately exit if there's nothing from previous session
+    if(localStorage.length < 1) { return }
+    plate_items = JSON.parse( localStorage.getItem('plate_items') )
 
+    plate_items.forEach( (item) => { populate_list(item, list) } )
+}
 
 function add_to_plate(e) {
     e.preventDefault()
@@ -22,7 +28,7 @@ function add_to_plate(e) {
 
     populate_list(item, list)
 
-    localStorage.setItem(item.name, item.checked)
+    localStorage.setItem('plate_items', JSON.stringify(plate_items))
 
     this.reset();
 }
@@ -39,7 +45,7 @@ function send_order(e) {
 
 
 //Events
-
+previous_session()
 
 form.addEventListener('submit', add_to_plate)
 
