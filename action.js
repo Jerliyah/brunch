@@ -49,8 +49,9 @@ function previous_session() {
 }
 
 
-function remove_selected() {
-    let selected = Array.from( [...document.querySelectorAll('input[checked]')] )
+function remove_selected(e) {
+    e.preventDefault()
+    let selected = Array.from( [...document.querySelectorAll('input:checked')].nextSibling )
     console.log(selected)
 }
 
@@ -68,10 +69,12 @@ function toggle_checked(element) {
     update_storage(item)
 }
 
-function update_storage(item) {
-    index = plate_items.findIndex( (obj) => { return obj.name == item.name});
 
-    if( index > 0 ) { plate_items[index].checked = item.checked }
+function update_storage(item) {
+
+    index = plate_items.findIndex( (obj) => { return obj.name == item.name});
+    console.log(index)
+    if( index > -1 ) { plate_items[index].checked = item.checked }
     else { plate_items.push(item) }
 
     localStorage.clear()
