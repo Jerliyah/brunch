@@ -57,8 +57,21 @@ function previous_session() {
 
 function remove_selected(e) {
     e.preventDefault()
-    let selected = Array.from( [...document.querySelectorAll('input:checked')].nextSibling )
-    console.log(selected)
+    let checkboxes = Array.from( [...document.querySelectorAll('input:checked')] )
+    let selected = checkboxes.map( (checkbox) => { return checkbox.parentElement } )
+    
+    selected.forEach( (li) => { 
+        li.remove()
+        remove_from_plate(li.textContent)
+    })
+
+    localStorage.clear()
+    localStorage.setItem('plate_items', JSON.stringify(plate_items))
+}
+
+function remove_from_plate(name) {
+    let index = plate_items.findIndex( (obj) => { return obj.name == name});
+    plate_items.splice(index, 1)
 }
 
 
@@ -77,16 +90,16 @@ function toggle_checked(element) {
 
 
 function update_storage(item) {
-
     index = plate_items.findIndex( (obj) => { return obj.name == item.name});
-    console.table(plate_items)
-    console.log(index)
+
     if( index > -1 ) { plate_items[index].checked = item.checked }
     else { plate_items.push(item) }
 
     localStorage.clear()
     localStorage.setItem('plate_items', JSON.stringify(plate_items))
 }
+
+
 
 
 
