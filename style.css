@@ -42,7 +42,7 @@ li > input {
     float: left;
 }
 
-form > div {
+form > div.input-ctn {
     border-top: 2px dashed white;
     display: flex;
 }
@@ -69,18 +69,18 @@ input[type="submit"]:active {
     font-weight: bold;
 }
 
-button {
+button.send {
     border: none;
     background: #B8DF5E;
     margin-top: 1em;
     padding: 0.5em;
     width: 100%;
 }
-button:hover {
+button.send:hover {
     background: #587217;
     color: white;
 }
-button:active {
+button.send:active {
     font-weight: bold;
 }
 

@@ -2,7 +2,7 @@
 const form = document.querySelector('form');
 const list = form.querySelector('ul.plate-list');
 const input = form.querySelector('input.plate-item');
-const submit = document.querySelector('button');
+const submit = document.querySelector('button.send');
 
 
 
@@ -33,9 +33,21 @@ function add_to_plate(e) {
     this.reset();
 }
 
+function toggle_checked(element) {
+    if( element.checked ) {
+        element.removeAttribute('checked')
+    }
+    else {
+        element.setAttribute('checked', true)
+    }
+}
+
 function populate_list(item, list) {
     let li = document.createElement('li')
     li.innerHTML = `<input type="checkbox" ${item.checked ? 'checked' : ''}> <label> ${item.name} </label>`
+
+    li.addEventListener('click', function() { toggle_checked(this.querySelector('input')) })
+    
     list.insertAdjacentElement('beforeend', li)
 }
 
