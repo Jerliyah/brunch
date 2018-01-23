@@ -20,7 +20,13 @@ function add_to_plate(e) {
 
     update_storage(item)
 
-    populate_list(item, list)
+    // Check that the item isn't already on the visual list
+    if( item.name != list.querySelector('label').textContent ) {
+        populate_list(item, list)
+    }
+    else {
+        input.setAttribute('placeholder', "That's already on the list")
+    }
 
     this.reset()
 }
@@ -65,7 +71,7 @@ function toggle_checked(element) {
     if( element.checked ) { element.removeAttribute('checked') }
     else { element.setAttribute('checked', true) }
 
-    let item = {'name': `${element.nextSibling.textContent}` , 'checked': `${element.checked}`}
+    let item = {'name': `${element.nextSibling.textContent}` , 'checked': element.checked}
     update_storage(item)
 }
 
@@ -73,6 +79,7 @@ function toggle_checked(element) {
 function update_storage(item) {
 
     index = plate_items.findIndex( (obj) => { return obj.name == item.name});
+    console.table(plate_items)
     console.log(index)
     if( index > -1 ) { plate_items[index].checked = item.checked }
     else { plate_items.push(item) }
