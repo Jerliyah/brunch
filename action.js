@@ -2,9 +2,9 @@
 const form = document.querySelector('form');
 const list = form.querySelector('ul.plate-list');
 const input = form.querySelector('input.plate-item');
-const submit = document.querySelector('button.send');
-const selection = form.querySelector('button.selection');
-const removal = form.querySelector('button.removal');
+const submit = form.querySelector('button.send');
+const selection = document.querySelector('button.selection');
+const removal = document.querySelector('button.removal');
 
 
 
@@ -20,8 +20,10 @@ function add_to_plate(e) {
 
     update_storage(item)
 
+    let label = list.querySelector('label')
+
     // Check that the item isn't already on the visual list
-    if( item.name != list.querySelector('label').textContent ) {
+    if( !label || item.name != label.textContent ) {
         populate_list(item, list)
     }
     else {
@@ -55,8 +57,7 @@ function previous_session() {
 }
 
 
-function remove_selected(e) {
-    e.preventDefault()
+function remove_selected() {
     let checkboxes = Array.from( [...document.querySelectorAll('input:checked')] )
     let selected = checkboxes.map( (checkbox) => { return checkbox.parentElement } )
     
@@ -85,7 +86,22 @@ function toggle_checked(element) {
     else { element.setAttribute('checked', true) }
 
     let item = {'name': `${element.nextSibling.textContent}` , 'checked': element.checked}
+
+    toggle_selection()
     update_storage(item)
+}
+
+function toggle_selection(e) {
+    // Text
+    let boxes = form.querySelectorAll('input[type="checkbox"]')
+    let checked = form.querySelectorAll('input:checked')
+
+    if( boxes.length === checked.length ) { 
+        selection.textContent = "Deselect All"
+    }
+    else {
+        selection.textContent = "Select All"
+    }
 }
 
 
@@ -112,6 +128,8 @@ function update_storage(item) {
 previous_session()
 
 form.addEventListener('submit', add_to_plate)
+
+selection.addEventListener('click', toggle_selection)
 
 submit.addEventListener('click', send_order)
 
