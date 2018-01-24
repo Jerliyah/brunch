@@ -2,9 +2,9 @@
 const form = document.querySelector('form');
 const list = form.querySelector('ul.plate-list');
 const input = form.querySelector('input.plate-item');
-const submit = form.querySelector('button.send');
-const selection = document.querySelector('button.selection');
-const removal = document.querySelector('button.removal');
+const submit_btn = form.querySelector('button.send');
+const select_btn = document.querySelector('button.selection');
+const removal_btn = document.querySelector('button.removal');
 
 
 
@@ -23,11 +23,11 @@ function add_to_plate(e) {
     let label = list.querySelector('label')
 
     // Check that the item isn't already on the visual list
-    if( !label || item.name != label.textContent ) {
-        populate_list(item, list)
+    if( !label || item.name != label.textContent ) { 
+        populate_list(item, list) 
     }
-    else {
-        input.setAttribute('placeholder', "That's already on the list")
+    else { 
+        input.setAttribute('placeholder', "That's already on the list") 
     }
 
     this.reset()
@@ -54,6 +54,8 @@ function previous_session() {
     list.innerHTML = ''
 
     plate_items.forEach( (item) => { populate_list(item, list) } )
+
+    toggle_select_text()
 }
 
 
@@ -82,25 +84,52 @@ function send_order(e) {
 
 
 function toggle_checked(element) {
-    if( element.checked ) { element.removeAttribute('checked') }
-    else { element.setAttribute('checked', true) }
+    if( element.checked ) { 
+        element.removeAttribute('checked') 
+    }
+    else { 
+        element.setAttribute('checked', true) 
+    }
 
     let item = {'name': `${element.nextSibling.textContent}` , 'checked': element.checked}
 
-    toggle_selection()
+    toggle_select_text()
     update_storage(item)
 }
 
-function toggle_selection(e) {
-    // Text
+
+function toggle_select_text() {
     let boxes = form.querySelectorAll('input[type="checkbox"]')
     let checked = form.querySelectorAll('input:checked')
 
+    // Text
     if( boxes.length === checked.length ) { 
-        selection.textContent = "Deselect All"
+        select_btn.textContent = "Deselect All"
     }
     else {
-        selection.textContent = "Select All"
+        select_btn.textContent = "Select All"
+    }
+}
+
+
+function toggle_selection() {
+    let targets = []
+
+    switch( select_btn.textContent ) {
+        case "Select All":
+            targets = Array.from( [...form.querySelectorAll('input[type="checkbox"]:not(:checked)')] )
+            break;
+
+        case "Deselect All":
+            targets = Array.from( [...form.querySelectorAll('input[type="checkbox"]:checked')] )
+            break;
+
+        default:
+            console.log("HEY! Issue with the functions: toggle_selection && toggle_select_text. \n Make sure that the button text fits the cases")
+    }
+
+    if( targets.length > 0 ) { 
+        targets.forEach( (target) => { toggle_checked(target) })
     }
 }
 
@@ -108,8 +137,12 @@ function toggle_selection(e) {
 function update_storage(item) {
     index = plate_items.findIndex( (obj) => { return obj.name == item.name});
 
-    if( index > -1 ) { plate_items[index].checked = item.checked }
-    else { plate_items.push(item) }
+    if( index > -1 ) { 
+        plate_items[index].checked = item.checked 
+    }
+    else { 
+        plate_items.push(item) 
+    }
 
     localStorage.clear()
     localStorage.setItem('plate_items', JSON.stringify(plate_items))
@@ -129,10 +162,10 @@ previous_session()
 
 form.addEventListener('submit', add_to_plate)
 
-selection.addEventListener('click', toggle_selection)
+select_btn.addEventListener('click', toggle_selection)
 
-submit.addEventListener('click', send_order)
+submit_btn.addEventListener('click', send_order)
 
-removal.addEventListener('click', remove_selected)
+removal_btn.addEventListener('click', remove_selected)
 
 
