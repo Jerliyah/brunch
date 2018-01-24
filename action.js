@@ -36,7 +36,7 @@ function add_to_plate(e) {
 
 
 function bring_the_plate() {
-    body.innerHTML = `<img src="plate.jpg" class="plate">
+    body.innerHTML = `<img src="assets/plate.png" class="plate">
                       <h1 class="plate-text">Imagination</h1>`
 }
 
