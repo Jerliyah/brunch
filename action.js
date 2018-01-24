@@ -1,4 +1,5 @@
 // DOM Grab
+const body = document.querySelector('body');
 const form = document.querySelector('form');
 const list = form.querySelector('ul.plate-list');
 const input = form.querySelector('input.plate-item');
@@ -31,6 +32,12 @@ function add_to_plate(e) {
     }
 
     this.reset()
+}
+
+
+function bring_the_plate() {
+    body.innerHTML = `<img src="plate.jpg" class="plate">
+                      <h1 class="plate-text">Imagination</h1>`
 }
 
 
@@ -79,7 +86,20 @@ function remove_from_plate(name) {
 
 
 function send_order(e) {
-    alert("Yum!")
+    e.preventDefault()
+
+    let item_names = plate_items.map( (item, index) => { 
+        if( index === plate_items.length - 1) {
+            return " and " + item.name 
+        }
+        else {
+            return " " + item.name
+        }
+    })
+
+    alert(`Looks like we have an order for${item_names}.\n Yum!`)
+
+    bring_the_plate()
 }
 
 
